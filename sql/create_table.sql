@@ -1,0 +1,22 @@
+CREATE TABLE EmployeePerformance (
+    Employee_ID INT PRIMARY KEY, 
+    Department VARCHAR(50) NOT NULL, 
+    Gender VARCHAR(10) CHECK (Gender IN ('Male', 'Female', 'Other')), 
+    Age INT CHECK (Age BETWEEN 18 AND 65), 
+    Job_Title VARCHAR(100) NOT NULL, 
+    Hire_Date DATE DEFAULT CURRENT_DATE,
+    Years_At_Company INT CHECK (Years_At_Company >= 0), 
+    Education_Level VARCHAR(50) CHECK (Education_Level IN ('High School', 'Bachelor', 'Master', 'PhD')), 
+    Performance_Score INT CHECK (Performance_Score BETWEEN 1 AND 5), 
+    Monthly_Salary DECIMAL(10,2) CHECK (Monthly_Salary > 0), 
+    Work_Hours_Per_Week INT CHECK (Work_Hours_Per_Week BETWEEN 20 AND 60), 
+    Projects_Handled INT CHECK (Projects_Handled >= 0), 
+    Overtime_Hours INT DEFAULT 0, 
+    Sick_Days INT CHECK (Sick_Days >= 0), 
+    Remote_Work_Frequency INT CHECK (Remote_Work_Frequency BETWEEN 0 AND 100), 
+    Team_Size INT CHECK (Team_Size >= 1), 
+    Training_Hours INT CHECK (Training_Hours >= 0), 
+    Promotions INT DEFAULT 0, 
+    Employee_Satisfaction_Score DECIMAL(3,2) CHECK (Employee_Satisfaction_Score BETWEEN 1 AND 5), 
+    Resigned VARCHAR(5)
+);
