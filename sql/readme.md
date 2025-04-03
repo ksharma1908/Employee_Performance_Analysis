@@ -10,7 +10,8 @@ This document contains SQL queries to analyze employee performance data. The dat
 
 ## KPIs & SQL Queries
 
-### 1. Employee Demographics & Distribution
+<details>
+<summary>1. Employee Demographics & Distribution</summary>
 
 #### Total Number of Employees
 ```sql
@@ -58,7 +59,10 @@ SELECT AVG(TIMESTAMPDIFF(YEAR, hire_date, CURDATE())) AS avg_tenure
 FROM EmployeePerformance;
 ```
 
-### 2. Performance & Productivity Metrics
+</details>
+
+<details>
+<summary>2. Performance & Productivity Metrics</summary>
 
 #### Average Performance Score per Department
 ```sql
@@ -108,7 +112,10 @@ GROUP BY department
 ORDER BY avg_projects DESC;
 ```
 
-### 3. Salary & Compensation Insights
+</details>
+
+<details>
+<summary>3. Salary & Compensation Insights</summary>
 
 #### Average Salary per Department
 ```sql
@@ -166,7 +173,10 @@ SELECT * FROM PromotionSalary
 ORDER BY Promotions DESC;
 ```
 
-### 4. Workload & Efficiency Analysis
+</details>
+
+<details>
+<summary>4. Workload & Efficiency Analysis</summary>
 
 #### Average Number of Work Hours per Week per Department
 ```sql
@@ -222,6 +232,8 @@ FROM EmployeePerformance
 GROUP BY department
 ORDER BY avg_remote_days DESC;
 ```
+
+</details>
 
 ## Additional Information
 - The `hire_date` column should be stored in `DATE` format to ensure correct calculations.
