@@ -1,12 +1,12 @@
 # Employee Performance Analysis - SQL KPIs
 
 ## Overview
-This document contains SQL queries to analyze employee performance data. The dataset is stored in MySQL, and the queries help extract key insights such as employee distribution, demographics, and tenure.
+This document contains SQL queries to analyze employee performance data. The dataset is stored in MySQL, and the queries help extract key insights such as employee distribution, demographics, tenure, and productivity metrics.
 
 ## Execution Environment
 - **Database:** MySQL
 - **Table Name:** `EmployeePerformance`
-- **Prerequisites:** Ensure the table structure is properly set up with columns like `department`, `gender`, `age`, `job_title`, `education_level`, and `hire_date`.
+- **Prerequisites:** Ensure the table structure is properly set up with columns like `department`, `gender`, `age`, `job_title`, `education_level`, `hire_date`, `performance_score`, `overtime_hours`, and `projects_handled`.
 
 ## KPIs & SQL Queries
 
@@ -58,9 +58,59 @@ SELECT AVG(TIMESTAMPDIFF(YEAR, hire_date, CURDATE())) AS avg_tenure
 FROM EmployeePerformance;
 ```
 
+### 2. Performance & Productivity Metrics
+
+#### Average Performance Score per Department
+```sql
+SELECT department, AVG(performance_score) AS avg_performance_score
+FROM EmployeePerformance
+GROUP BY department
+ORDER BY avg_performance_score DESC;
+```
+
+#### Top 10 Highest-Performing Employees
+```sql
+SELECT employee_id, department, performance_score
+FROM EmployeePerformance
+ORDER BY performance_score DESC
+LIMIT 10;
+```
+
+#### Lowest-Performing Employees
+```sql
+SELECT employee_id, department, performance_score
+FROM EmployeePerformance
+ORDER BY performance_score ASC
+LIMIT 10;
+```
+
+#### Distribution of Performance Scores Across Departments
+```sql
+SELECT department, performance_score, COUNT(*) AS employee_count
+FROM EmployeePerformance
+GROUP BY department, performance_score
+ORDER BY department, performance_score DESC;
+```
+
+#### Impact of Overtime on Employee Performance
+```sql
+SELECT overtime_hours, AVG(performance_score) AS avg_performance_score
+FROM EmployeePerformance
+GROUP BY overtime_hours
+ORDER BY overtime_hours ASC;
+```
+
+#### Average Number of Projects Handled per Department
+```sql
+SELECT department, AVG(projects_handled) AS avg_projects
+FROM EmployeePerformance
+GROUP BY department
+ORDER BY avg_projects DESC;
+```
+
 ## Additional Information
 - The `hire_date` column should be stored in `DATE` format to ensure correct calculations.
-- Use `INDEX` on `department`, `job_title`, and `education_level` for better query performance.
+- Use `INDEX` on `department`, `job_title`, `education_level`, and `performance_score` for better query performance.
 
 ## Related Resources
 - [Excel Data Cleaning](https://github.com/ksharma1908/Employee_Performance_Analysis/blob/master/excel_validations.md)
@@ -68,6 +118,6 @@ FROM EmployeePerformance;
 - [SQL Queries & Scripts](https://github.com/ksharma1908/Employee_Performance_Analysis/tree/master/sql)
 
 ## Conclusion
-These queries help extract meaningful insights into employee demographics, distribution, and tenure. The results can be further analyzed using Power BI for visualization and strategic decision-making.
+These queries help extract meaningful insights into employee demographics, distribution, tenure, and performance. The results can be further analyzed using Power BI for visualization and strategic decision-making.
 
 For contributions or improvements, feel free to submit a pull request!
