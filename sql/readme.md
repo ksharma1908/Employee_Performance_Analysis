@@ -166,6 +166,63 @@ SELECT * FROM PromotionSalary
 ORDER BY Promotions DESC;
 ```
 
+### 4. Workload & Efficiency Analysis
+
+#### Average Number of Work Hours per Week per Department
+```sql
+SELECT department, AVG(work_hours_per_week) AS avg_work_hours
+FROM EmployeePerformance
+GROUP BY department
+ORDER BY avg_work_hours DESC;
+```
+
+#### Employees Who Work More Than the Standard Hours
+```sql
+SELECT employee_id, employee_name, work_hours_per_week
+FROM EmployeePerformance
+WHERE work_hours_per_week > 40
+ORDER BY work_hours_per_week DESC;
+```
+
+#### Employee with the Highest Overtime Hours
+```sql
+SELECT employee_id, employee_name, overtime_hours
+FROM EmployeePerformance
+ORDER BY overtime_hours DESC
+LIMIT 1;
+```
+
+#### Employees Handling the Most Projects
+```sql
+SELECT employee_id, employee_name, projects_handled
+FROM EmployeePerformance
+ORDER BY projects_handled DESC
+LIMIT 10;
+```
+
+#### Employees with the Most and Least Sick Days
+```sql
+SELECT employee_id, employee_name, sick_days
+FROM EmployeePerformance
+ORDER BY sick_days DESC
+LIMIT 10;
+```
+
+```sql
+SELECT employee_id, employee_name, sick_days
+FROM EmployeePerformance
+ORDER BY sick_days ASC
+LIMIT 10;
+```
+
+#### Average Remote Work Frequency by Department
+```sql
+SELECT department, AVG(remote_work_days) AS avg_remote_days
+FROM EmployeePerformance
+GROUP BY department
+ORDER BY avg_remote_days DESC;
+```
+
 ## Additional Information
 - The `hire_date` column should be stored in `DATE` format to ensure correct calculations.
 - Use `INDEX` on `department`, `job_title`, `education_level`, and `performance_score` for better query performance.
