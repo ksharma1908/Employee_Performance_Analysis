@@ -108,6 +108,64 @@ GROUP BY department
 ORDER BY avg_projects DESC;
 ```
 
+### 3. Salary & Compensation Insights
+
+#### Average Salary per Department
+```sql
+WITH DepartmentSalary AS (
+    SELECT Department, AVG(Monthly_Salary) AS Avg_Salary
+    FROM EmployeePerformance
+    GROUP BY Department
+)
+SELECT * FROM DepartmentSalary
+ORDER BY Avg_Salary DESC;
+```
+
+#### Highest and Lowest Salaries in Each Department
+```sql
+WITH SalaryRange AS (
+    SELECT Department, 
+           MAX(Monthly_Salary) AS Highest_Salary, 
+           MIN(Monthly_Salary) AS Lowest_Salary
+    FROM EmployeePerformance
+    GROUP BY Department
+)
+SELECT * FROM SalaryRange;
+```
+
+#### Salary Variation by Job Title
+```sql
+WITH JobTitleSalary AS (
+    SELECT Job_Title, AVG(Monthly_Salary) AS Avg_Salary
+    FROM EmployeePerformance
+    GROUP BY Job_Title
+)
+SELECT * FROM JobTitleSalary
+ORDER BY Avg_Salary DESC;
+```
+
+#### Impact of Education Level on Salary
+```sql
+WITH EducationSalary AS (
+    SELECT Education_Level, AVG(Monthly_Salary) AS Avg_Salary
+    FROM EmployeePerformance
+    GROUP BY Education_Level
+)
+SELECT * FROM EducationSalary
+ORDER BY Avg_Salary DESC;
+```
+
+#### Effect of Promotions on Salary Over Time
+```sql
+WITH PromotionSalary AS (
+    SELECT Promotions, AVG(Monthly_Salary) AS Avg_Salary
+    FROM EmployeePerformance
+    GROUP BY Promotions
+)
+SELECT * FROM PromotionSalary
+ORDER BY Promotions DESC;
+```
+
 ## Additional Information
 - The `hire_date` column should be stored in `DATE` format to ensure correct calculations.
 - Use `INDEX` on `department`, `job_title`, `education_level`, and `performance_score` for better query performance.
