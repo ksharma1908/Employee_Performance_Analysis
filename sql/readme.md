@@ -301,6 +301,74 @@ ORDER BY
 
 </details>
 
+<details>
+<summary>6. Attrition & Resignation Analysis</summary>
+
+#### How many employees have resigned?
+```sql
+SELECT COUNT(*) AS resigned_count
+FROM EmployeePerformance
+WHERE attrition = 'Yes';
+```
+
+#### What is the resignation rate per department?
+```sql
+SELECT department,
+       ROUND(SUM(CASE WHEN attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS resignation_rate
+FROM EmployeePerformance
+GROUP BY department
+ORDER BY resignation_rate DESC;
+```
+
+#### How have resignations changed over time (monthly/yearly trends)?
+```sql
+-- Monthly Trend
+SELECT DATE_FORMAT(resignation_date, '%Y-%m') AS resignation_month,
+       COUNT(*) AS resignation_count
+FROM EmployeePerformance
+WHERE attrition = 'Yes'
+GROUP BY resignation_month
+ORDER BY resignation_month;
+```
+
+```sql
+-- Yearly Trend
+SELECT YEAR(resignation_date) AS resignation_year,
+       COUNT(*) AS resignation_count
+FROM EmployeePerformance
+WHERE attrition = 'Yes'
+GROUP BY resignation_year
+ORDER BY resignation_year;
+```
+
+#### What is the average tenure of employees who resigned?
+```sql
+SELECT AVG(TIMESTAMPDIFF(MONTH, hire_date, resignation_date)) AS avg_tenure_months
+FROM EmployeePerformance
+WHERE attrition = 'Yes';
+```
+
+#### Who had the longest tenure before resigning?
+```sql
+SELECT employee_id, employee_name, TIMESTAMPDIFF(MONTH, hire_date, resignation_date) AS tenure_months
+FROM EmployeePerformance
+WHERE attrition = 'Yes'
+ORDER BY tenure_months DESC
+LIMIT 1;
+```
+
+#### Common characteristics of resigned employees (age, experience, satisfaction)
+```sql
+SELECT 
+    ROUND(AVG(age), 1) AS avg_age,
+    ROUND(AVG(TIMESTAMPDIFF(YEAR, hire_date, resignation_date)), 1) AS avg_experience_years,
+    ROUND(AVG(employee_satisfaction_score), 2) AS avg_satisfaction
+FROM EmployeePerformance
+WHERE attrition = 'Yes';
+```
+
+</details>
+
 ## Additional Information
 - The `hire_date` column should be stored in `DATE` format to ensure correct calculations.
 - Use `INDEX` on `department`, `job_title`, `education_level`, `performance_score`, and `employee_satisfaction_score` for better query performance.
