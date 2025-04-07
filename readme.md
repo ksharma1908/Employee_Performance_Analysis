@@ -24,7 +24,7 @@ After cleaning, the data was imported into SQL for further transformation and qu
 
 SQL scripts: [SQL Queries & Scripts](https://github.com/ksharma1908/Employee_Performance_Analysis/tree/master/sql)
 
-### 3. Data Visualization in Power BI
+### 3. Data Visualization in Power BI (TODO)
 The processed data was imported into Power BI for interactive reporting. Key dashboards include:
 - **Employee Performance Trends**
 - **Attrition Analysis**
