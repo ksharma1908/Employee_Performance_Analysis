@@ -6,7 +6,7 @@ This document contains SQL queries to analyze employee performance data. The dat
 ## Execution Environment
 - **Database:** MySQL
 - **Table Name:** `EmployeePerformance`
-- **Prerequisites:** Ensure the table structure is properly set up with columns like `department`, `gender`, `age`, `job_title`, `education_level`, `hire_date`, `performance_score`, `overtime_hours`, and `projects_handled`.
+- **Prerequisites:** Ensure the table structure is properly set up with columns like `department`, `gender`, `age`, `job_title`, `education_level`, `hire_date`, `performance_score`, `overtime_hours`, `projects_handled`, `employee_satisfaction_score`, and `remote_work_frequency`.
 
 ## KPIs & SQL Queries
 
@@ -235,9 +235,75 @@ ORDER BY avg_remote_days DESC;
 
 </details>
 
+<details>
+<summary>5. Employee Satisfaction & Retention</summary>
+
+#### What is the average employee satisfaction score?
+```sql
+SELECT 
+    AVG(Employee_Satisfaction_Score) AS avg_satisfaction
+FROM 
+    EmployeePerformance;
+```
+
+#### Who are the most and least satisfied employees?
+-- Most satisfied employee
+```sql
+SELECT *
+FROM EmployeePerformance
+ORDER BY Employee_Satisfaction_Score DESC
+LIMIT 1;
+```
+-- Least satisfied employee
+```sql
+SELECT *
+FROM EmployeePerformance
+ORDER BY Employee_Satisfaction_Score ASC
+LIMIT 1;
+```
+
+#### How does satisfaction score vary by department?
+```sql
+SELECT 
+    department, 
+    AVG(Employee_Satisfaction_Score) AS avg_satisfaction
+FROM 
+    EmployeePerformance
+GROUP BY 
+    department
+ORDER BY 
+    avg_satisfaction DESC;
+```
+
+#### Does remote work impact employee satisfaction?
+```sql
+SELECT 
+    Remote_Work_Frequency,
+    AVG(Employee_Satisfaction_Score) AS avg_satisfaction
+FROM 
+    EmployeePerformance
+GROUP BY 
+    Remote_Work_Frequency;
+```
+
+#### How does job title impact satisfaction levels?
+```sql
+SELECT 
+    job_title,
+    AVG(Employee_Satisfaction_Score) AS avg_satisfaction
+FROM 
+    EmployeePerformance
+GROUP BY 
+    job_title
+ORDER BY 
+    avg_satisfaction DESC;
+```
+
+</details>
+
 ## Additional Information
 - The `hire_date` column should be stored in `DATE` format to ensure correct calculations.
-- Use `INDEX` on `department`, `job_title`, `education_level`, and `performance_score` for better query performance.
+- Use `INDEX` on `department`, `job_title`, `education_level`, `performance_score`, and `employee_satisfaction_score` for better query performance.
 
 ## Related Resources
 - [Excel Data Cleaning](https://github.com/ksharma1908/Employee_Performance_Analysis/blob/master/excel_validations.md)
